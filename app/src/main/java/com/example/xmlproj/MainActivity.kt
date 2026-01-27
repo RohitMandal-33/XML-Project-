@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,10 +13,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -38,9 +35,9 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            showNotification()
+            sendNotification()
         } else {
-            Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            Log.w("NOTIFICATION", "Permission denied by user")
         }
     }
 
@@ -66,57 +63,25 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Button to show notification with PendingIntent
+        // Notification Button
         val btnShowNotification = findViewById<Button>(R.id.btnShowNotification)
         btnShowNotification.setOnClickListener {
             checkPermissionAndShowNotification()
         }
-    }
 
-    private fun checkPermissionAndShowNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    showNotification()
-                }
-                else -> {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-        } else {
-            showNotification()
+        // Intent Service Buttons
+        val btnStartService = findViewById<Button>(R.id.btnStartService)
+        val btnStopService = findViewById<Button>(R.id.btnStopService)
+
+        btnStartService.setOnClickListener {
+            val intent = Intent(this, MyIntentService::class.java)
+            startService(intent)
         }
-    }
 
-    private fun showNotification() {
-        val pendingIntent = createPendingIntent()
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Open Second Activity")
-            .setContentText("Tap to go to the second screen.")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        try {
-            NotificationManagerCompat.from(this).notify(1, builder.build())
-        } catch (e: SecurityException) {
-            Log.e("NOTIFICATION", "Permission missing for notifications: ${e.message}")
+        btnStopService.setOnClickListener {
+            val intent = Intent(this, MyIntentService::class.java)
+            stopService(intent)
         }
-    }
-
-    private fun createPendingIntent(): PendingIntent {
-        val intent = Intent(this, SecondActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        
-        val flags = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-
-        return PendingIntent.getActivity(this, 0, intent, flags)
     }
 
     private fun createNotificationChannel() {
@@ -130,6 +95,38 @@ class MainActivity : AppCompatActivity() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun checkPermissionAndShowNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                sendNotification()
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            sendNotification()
+        }
+    }
+
+    private fun sendNotification() {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Notification Alert")
+            .setContentText("This is a test notification from XML Proj!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+
+        try {
+            with(NotificationManagerCompat.from(this)) {
+                // notificationId is a unique int for each notification that you must define
+                notify(1, builder.build())
+            }
+        } catch (e: SecurityException) {
+            Log.e("NOTIFICATION", "Security Exception: ${e.message}")
         }
     }
 
