@@ -46,6 +46,12 @@ class MainActivity : AppCompatActivity() {
         Log.d("LIFECYCLE", "onCreate")
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, TestFragment())
+                .commit()
+        }
+
         createNotificationChannel()
 
         // Button to open SecondActivity
