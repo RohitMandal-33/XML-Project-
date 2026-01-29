@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txtFragment"
+        android:id="@+id/txt1Fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/this_is_first_fragment"
@@ -16,5 +16,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next" />
+    <TextView
+        android:id="@+id/txtFragment"
+        android:text="Waiting for data..."
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnSendToActivity"
+        android:text="Send to Activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

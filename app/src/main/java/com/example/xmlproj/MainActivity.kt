@@ -13,13 +13,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TestFragment.OnFragmentInteractionListener {
 
     private val CHANNEL_ID = "example_channel"
 
@@ -47,8 +48,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
+            val fragment = TestFragment.newInstance("Hello from MainActivity")
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, TestFragment())
+                .add(R.id.fragment_container, fragment)
                 .commit()
         }
 
@@ -159,5 +161,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("LIFECYCLE", "onDestroy")
+    }
+
+    override fun onMessageFromFragment(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
