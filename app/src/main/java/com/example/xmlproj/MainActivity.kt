@@ -90,6 +90,12 @@ class MainActivity : AppCompatActivity(), TestFragment.OnFragmentInteractionList
             val intent = Intent(this, MyIntentService::class.java)
             stopService(intent)
         }
+
+        // Preferences Button
+        findViewById<Button>(R.id.btnGoToPrefs).setOnClickListener {
+            val intent = Intent(this, PreferenceTestActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun createNotificationChannel() {
