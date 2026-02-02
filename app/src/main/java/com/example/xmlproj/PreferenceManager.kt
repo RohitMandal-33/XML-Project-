@@ -70,12 +70,10 @@ class PreferenceManager(context: Context) {
         return getBoolean(KEY_IS_LOGGED_IN)
     }
 
-    // Clear all data (useful for logout)
     fun clearAll() {
         sharedPreferences.edit().clear().apply()
     }
 
-    // Remove specific key
     fun remove(key: String) {
         sharedPreferences.edit().remove(key).apply()
     }
