@@ -12,7 +12,7 @@ class MyIntentService : Service() {
 
     // Handler that receives messages from the background thread
     private inner class ServiceHandler(looper: Looper) : Handler(looper) {
-        override fun handleMessage(msg: Message) {
+        override fun handleMessage(msg: android.os.Message) {
             // Simulate some background work
             try {
                 Handler(Looper.getMainLooper()).post {
