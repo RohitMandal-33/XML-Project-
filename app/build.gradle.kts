@@ -1,14 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("kotlin-parcelize")
+    // Parcelize is not used anywhere, so we keep the setup minimal
     alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.example.xmlproj"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.xmlproj"
@@ -33,22 +31,27 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    // Modern Android projects using KSP should NOT manually add generated paths to sourceSets
+    // if it causes conflicts with built-in Kotlin support. 
+    // Removing manual sourceSets to let AGP and KSP handle it automatically.
 }
 
 dependencies {
-    val fragment_version = "1.8.9"
-    val nav_version = "2.7.7"
+    val fragmentVersion = "1.8.9"
+    val navVersion = "2.7.7"
     val recyclerViewVersion = "1.3.2"
-    val room_version = "2.6.1"
+    val roomVersion = "2.7.0-alpha11"
 
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-    implementation("androidx.fragment:fragment:$fragment_version")
-    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation("androidx.fragment:fragment:$fragmentVersion")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     implementation("androidx.recyclerview:recyclerview:$recyclerViewVersion")
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

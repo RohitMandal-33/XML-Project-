@@ -62,5 +62,10 @@ class SecondActivity : AppCompatActivity() {
             val intent = Intent(this, RecyclerViewActivity::class.java)
             startActivity(intent)
         }
+        val btndatabase = findViewById<Button>(R.id.btndatabase)
+        btndatabase.setOnClickListener {
+            val intent = Intent(this, DatabaseTestActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
