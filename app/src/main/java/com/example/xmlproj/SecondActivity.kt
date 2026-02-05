@@ -67,5 +67,10 @@ class SecondActivity : AppCompatActivity() {
             val intent = Intent(this, DatabaseTestActivity::class.java)
             startActivity(intent)
         }
+        val btnmailbox = findViewById<Button>(R.id.btnmailbox)
+        btnmailbox.setOnClickListener {
+            val intent = Intent(this, MailBoxActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
