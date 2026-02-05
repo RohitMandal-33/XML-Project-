@@ -31,6 +31,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 
     // Modern Android projects using KSP should NOT manually add generated paths to sourceSets
     // if it causes conflicts with built-in Kotlin support. 

@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat
 class MainActivity : AppCompatActivity(), TestFragment.OnFragmentInteractionListener {
 
     private val CHANNEL_ID = "example_channel"
+    private lateinit var preferenceManager: PreferenceManager
 
     private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -55,6 +57,31 @@ class MainActivity : AppCompatActivity(), TestFragment.OnFragmentInteractionList
         }
 
         createNotificationChannel()
+
+        preferenceManager = PreferenceManager(this)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val textView = findViewById<TextView>(R.id.textView)
+
+        if (preferenceManager.isLoggedIn()) {
+            btnLogin.text = "Logout"
+            btnRegister.visibility = View.GONE
+            textView.text = "Welcome, ${preferenceManager.getUserName()}"
+
+            btnLogin.setOnClickListener {
+                preferenceManager.clearAll()
+                recreate()
+            }
+        } else {
+            btnLogin.setOnClickListener {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            btnRegister.setOnClickListener {
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         // Button to open SecondActivity
         val btnOpenSecond = findViewById<Button>(R.id.btnOpenSecond)

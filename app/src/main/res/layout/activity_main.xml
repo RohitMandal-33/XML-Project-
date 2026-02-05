@@ -5,86 +5,118 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="550dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+    <!-- Header Section with Login/Register Buttons -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Login"
+        app:layout_constraintEnd_toStartOf="@id/btnRegister"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnLogin"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Welcome Text -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
+    <!-- Main Action Buttons - Vertically Stacked -->
     <Button
         android:id="@+id/btnOpenSecond"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Open Second Activity"
-        app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintWidth_max="300dp" />
 
     <Button
         android:id="@+id/btnOpenWeb"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Open Web"
-        app:layout_constraintTop_toBottomOf="@id/btnOpenSecond"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/btnOpenSecond"
+        app:layout_constraintStart_toStartOf="@id/btnOpenSecond"
+        app:layout_constraintTop_toBottomOf="@id/btnOpenSecond" />
 
     <Button
         android:id="@+id/btnShowNotification"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Show Notification"
-        app:layout_constraintTop_toBottomOf="@id/btnOpenWeb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/btnOpenWeb"
+        app:layout_constraintStart_toStartOf="@id/btnOpenWeb"
+        app:layout_constraintTop_toBottomOf="@id/btnOpenWeb" />
 
     <Button
         android:id="@+id/btnStartService"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Start Intent Service"
-        app:layout_constraintTop_toBottomOf="@id/btnShowNotification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/btnShowNotification"
+        app:layout_constraintStart_toStartOf="@id/btnShowNotification"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotification" />
 
     <Button
         android:id="@+id/btnStopService"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Stop Intent Service"
-        app:layout_constraintTop_toBottomOf="@id/btnStartService"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/btnStartService"
+        app:layout_constraintStart_toStartOf="@id/btnStartService"
+        app:layout_constraintTop_toBottomOf="@id/btnStartService" />
 
     <Button
         android:id="@+id/btnGoToPrefs"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="Settings / Preferences"
-        app:layout_constraintTop_toBottomOf="@id/btnStopService"
+        app:layout_constraintEnd_toEndOf="@id/btnStopService"
+        app:layout_constraintStart_toStartOf="@id/btnStopService"
+        app:layout_constraintTop_toBottomOf="@id/btnStopService" />
+
+    <!-- Fragment Container - Below all buttons -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGoToPrefs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
